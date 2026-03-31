@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { IconBuildingStore, IconDots, IconTrash } from '@tabler/icons-react'
+import { IconMapPin, IconDots, IconTrash } from '@tabler/icons-react'
 
 export default function Header({ onSettingsClick, onClearAll }) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -52,7 +52,7 @@ export default function Header({ onSettingsClick, onClearAll }) {
             onClick={onSettingsClick}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', display: 'flex', alignItems: 'center', color: 'var(--grey-icon)' }}
           >
-            <IconBuildingStore size={22} stroke={1.5} />
+            <IconMapPin size={22} stroke={1.5} />
           </button>
           <div ref={menuRef} style={{ position: 'relative' }}>
             <button
