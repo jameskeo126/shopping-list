@@ -87,14 +87,28 @@ export default function Header({ onSettingsClick, onClearAll }) {
       </header>
 
       {confirmClear && (
-        <div style={{
-          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.35)',
-          display: 'flex', alignItems: 'flex-end', zIndex: 500,
-        }}>
-          <div style={{
-            background: 'var(--white)', width: '100%', padding: '24px 16px 32px',
-            borderRadius: '20px 20px 0 0',
-          }}>
+        <div
+          onClick={() => setConfirmClear(false)}
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.35)',
+            display: 'flex', zIndex: 500,
+            // Mobile: drawer from bottom. Desktop (≥480px): centered modal.
+            alignItems: window.innerWidth >= 480 ? 'center' : 'flex-end',
+            justifyContent: 'center',
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: 'var(--white)',
+              padding: '24px 16px 32px',
+              // Mobile: full-width bottom sheet
+              ...(window.innerWidth < 480
+                ? { width: '100%', borderRadius: '20px 20px 0 0' }
+                : { width: '360px', borderRadius: '16px', padding: '32px 28px' }
+              ),
+            }}
+          >
             <h2 style={{ fontSize: '18px', fontWeight: 700, fontFamily: 'var(--font-head)', marginBottom: '6px' }}>
               Clear all items?
             </h2>
