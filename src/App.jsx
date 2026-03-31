@@ -13,7 +13,7 @@ export default function App() {
   const [view, setView] = useState('list') // 'list' | 'settings'
   const [selectedShopId, setSelectedShopId] = useState(null)
 
-  const { items, addItem, toggleItem, deleteItem, clearAll } = useItems()
+  const { items, addItem, editItem, toggleItem, deleteItem, clearAll } = useItems()
   const shops = useShops()
   const history = useHistory()
 
@@ -47,6 +47,7 @@ export default function App() {
         shop={selectedShop}
         suggestions={history}
         onAdd={addItem}
+        onEdit={editItem}
         onToggle={toggleItem}
         onDelete={deleteItem}
       />

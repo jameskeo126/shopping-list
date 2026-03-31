@@ -1,21 +1,39 @@
-import { useState, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { IconX, IconCheck } from '@tabler/icons-react'
 
-export default function ItemRow({ item, onToggle, onDelete }) {
-  const [showDelete, setShowDelete] = useState(false)
+export default function ItemRow({ item, onToggle, onEdit, onDelete }) {
+  const [editing, setEditing] = useState(false)
+  const [editValue, setEditValue] = useState(item.name)
+  const inputRef = useRef(null)
+
+  // Sync editValue if item name changes externally
+  useEffect(() => {
+    if (!editing) setEditValue(item.name)
+  }, [item.name, editing])
 
   useEffect(() => {
-    if (!showDelete) return
-    function handleClick(e) {
-      if (!e.target.closest('[data-item-row]')) setShowDelete(false)
-    }
-    document.addEventListener('click', handleClick)
-    return () => document.removeEventListener('click', handleClick)
-  }, [showDelete])
+    if (editing && inputRef.current) inputRef.current.focus()
+  }, [editing])
 
   function handleRowClick(e) {
     if (e.target.closest('[role="checkbox"]') || e.target.closest('[aria-label="Delete item"]')) return
-    setShowDelete(v => !v)
+    if (!editing) {
+      setEditValue(item.name)
+      setEditing(true)
+    }
+  }
+
+  function handleSave() {
+    const trimmed = editValue.trim()
+    if (trimmed && trimmed !== item.name) {
+      onEdit(item.id, trimmed)
+    }
+    setEditing(false)
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === 'Enter')  handleSave()
+    if (e.key === 'Escape') { setEditing(false); setEditValue(item.name) }
   }
 
   return (
@@ -52,18 +70,39 @@ export default function ItemRow({ item, onToggle, onDelete }) {
         {item.checked && <IconCheck size={13} stroke={2.5} color="white" />}
       </div>
 
-      <span style={{
-        flex: 1,
-        fontSize: '15px',
-        color: item.checked ? 'var(--grey-text)' : 'var(--black)',
-        textDecoration: item.checked ? 'line-through' : 'none',
-      }}>
-        {item.name}
-      </span>
+      {editing ? (
+        <input
+          ref={inputRef}
+          value={editValue}
+          onChange={e => setEditValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onBlur={handleSave}
+          style={{
+            flex: 1,
+            fontSize: '16px',
+            border: 'none',
+            outline: 'none',
+            background: 'transparent',
+            fontFamily: 'var(--font-body)',
+            color: 'var(--black)',
+            padding: 0,
+          }}
+        />
+      ) : (
+        <span style={{
+          flex: 1,
+          fontSize: '15px',
+          color: item.checked ? 'var(--grey-text)' : 'var(--black)',
+          textDecoration: item.checked ? 'line-through' : 'none',
+        }}>
+          {item.name}
+        </span>
+      )}
 
-      {showDelete && (
+      {editing && (
         <button
           aria-label="Delete item"
+          onMouseDown={e => e.preventDefault()} // prevent input blur before click fires
           onClick={() => onDelete(item.id)}
           style={{
             background: 'none',

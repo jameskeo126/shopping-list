@@ -40,15 +40,43 @@ describe('useItems', () => {
     )
   })
 
-  it('addItem writes to history using setDoc for deduplication', async () => {
+  it('addItem does NOT write to history (avoids saving misspellings)', async () => {
     const { setDoc } = await import('firebase/firestore')
     const { result } = renderHook(() => useItems())
     await act(async () => {
-      await result.current.addItem('Butter', 'dairy-cheese')
-      await result.current.addItem('Butter', 'dairy-cheese')
+      await result.current.addItem('Buttr', 'dairy-cheese')
     })
-    const calls = setDoc.mock.calls.filter(c => c[1]?.name === 'Butter')
-    expect(calls.length).toBeGreaterThan(0)
+    expect(setDoc).not.toHaveBeenCalled()
+  })
+
+  it('editItem updates the item name and saves corrected spelling to history', async () => {
+    const { updateDoc, setDoc } = await import('firebase/firestore')
+    const { result } = renderHook(() => useItems())
+    await act(async () => {
+      await result.current.editItem('item1', 'Butter')
+    })
+    expect(updateDoc).toHaveBeenCalledWith(expect.anything(), { name: 'Butter' })
+    const historyCalls = setDoc.mock.calls.filter(c => c[1]?.name === 'Butter')
+    expect(historyCalls.length).toBeGreaterThan(0)
+  })
+
+  it('toggleItem saves to history when checking an item off', async () => {
+    const { setDoc } = await import('firebase/firestore')
+    const { result } = renderHook(() => useItems())
+    await act(async () => {
+      await result.current.toggleItem('item1', false) // item1 = Milk, checking it off
+    })
+    const historyCalls = setDoc.mock.calls.filter(c => c[1]?.name === 'Milk')
+    expect(historyCalls.length).toBeGreaterThan(0)
+  })
+
+  it('toggleItem does NOT save to history when unchecking', async () => {
+    const { setDoc } = await import('firebase/firestore')
+    const { result } = renderHook(() => useItems())
+    await act(async () => {
+      await result.current.toggleItem('item2', true) // item2 = Eggs, unchecking
+    })
+    expect(setDoc).not.toHaveBeenCalled()
   })
 
   it('toggleItem calls updateDoc with toggled checked value', async () => {

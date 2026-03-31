@@ -5,6 +5,11 @@ import {
 } from 'firebase/firestore'
 import { db } from '../firebase'
 
+function saveToHistory(name) {
+  const historyId = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+  return setDoc(doc(db, 'history', historyId), { name }).catch(() => {})
+}
+
 export function useItems() {
   const [items, setItems] = useState([])
 
@@ -24,16 +29,25 @@ export function useItems() {
       checked: false,
       createdAt: serverTimestamp(),
     })
-    // Use setDoc with a deterministic doc ID so the same item name
-    // never creates duplicate history entries
-    const historyId = trimmed.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
-    await setDoc(doc(db, 'history', historyId), { name: trimmed }).catch(() => {
-      // Ignore if history write fails — autosuggest is non-critical
-    })
+    // History is NOT written here — the item may be misspelled.
+    // It's written when the item is checked off or manually edited.
+  }
+
+  async function editItem(id, newName) {
+    const trimmed = newName.trim()
+    if (!trimmed) return
+    await updateDoc(doc(db, 'items', id), { name: trimmed })
+    // Confirmed correct spelling — save to history
+    await saveToHistory(trimmed)
   }
 
   async function toggleItem(id, currentChecked) {
     await updateDoc(doc(db, 'items', id), { checked: !currentChecked })
+    // Being checked off = confirmed item — save to history
+    if (!currentChecked) {
+      const item = items.find(i => i.id === id)
+      if (item) await saveToHistory(item.name)
+    }
   }
 
   async function deleteItem(id) {
@@ -44,5 +58,5 @@ export function useItems() {
     await Promise.all(items.map(item => deleteDoc(doc(db, 'items', item.id))))
   }
 
-  return { items, addItem, toggleItem, deleteItem, clearAll }
+  return { items, addItem, editItem, toggleItem, deleteItem, clearAll }
 }

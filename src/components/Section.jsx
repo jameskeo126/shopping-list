@@ -3,7 +3,7 @@ import { SECTION_ICONS } from '../data/sectionIcons'
 import ItemRow from './ItemRow'
 import AddItemInput from './AddItemInput'
 
-export default function Section({ section, items, suggestions, onAdd, onToggle, onDelete }) {
+export default function Section({ section, items, suggestions, onAdd, onEdit, onToggle, onDelete }) {
   const [expanded, setExpanded] = useState(items.length > 0)
   const didInitRef = useRef(false)
 
@@ -62,7 +62,7 @@ export default function Section({ section, items, suggestions, onAdd, onToggle, 
         <div style={{ overflow: 'hidden' }}>
           <div style={{ padding: '0 0 16px' }}>
             {items.map(item => (
-              <ItemRow key={item.id} item={item} onToggle={onToggle} onDelete={onDelete} />
+              <ItemRow key={item.id} item={item} onEdit={onEdit} onToggle={onToggle} onDelete={onDelete} />
             ))}
             <AddItemInput
               onAdd={name => onAdd(name, section.id)}
