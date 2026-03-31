@@ -26,7 +26,7 @@ export default function Section({ section, items, suggestions, onAdd, onToggle, 
           display: 'flex',
           alignItems: 'center',
           width: '100%',
-          padding: '12px 16px',
+          padding: '12px 0',
           background: 'none',
           border: 'none',
           cursor: 'pointer',
@@ -62,7 +62,7 @@ export default function Section({ section, items, suggestions, onAdd, onToggle, 
       </button>
 
       {expanded && (
-        <div style={{ padding: '0 16px 16px' }}>
+        <div style={{ padding: '0 0 16px' }}>
           {items.map(item => (
             <ItemRow key={item.id} item={item} onToggle={onToggle} onDelete={onDelete} />
           ))}

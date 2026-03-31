@@ -94,7 +94,8 @@ export default function ShopEdit({ shop, onBack }) {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
       <header style={{
         display: 'flex', alignItems: 'center', gap: '12px',
-        padding: '20px 16px 12px', borderBottom: '1px solid var(--grey-mid)',
+        padding: '20px 16px 12px', margin: '0 -16px',
+        borderBottom: '1px solid var(--grey-mid)',
         position: 'sticky', top: 0, background: 'var(--white)', zIndex: 100,
       }}>
         <button
@@ -116,7 +117,7 @@ export default function ShopEdit({ shop, onBack }) {
         />
       </header>
 
-      <div style={{ padding: '16px 16px 32px' }}>
+      <div style={{ padding: '16px 0 32px' }}>
         <p style={{ fontSize: '13px', color: 'var(--grey-text)', marginBottom: '16px' }}>
           Drag sections into the order you walk this shop
         </p>

@@ -32,6 +32,7 @@ export default function Header({ onSettingsClick, onClearAll }) {
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '20px 16px 12px',
+        margin: '0 -16px',
         borderBottom: '1px solid var(--grey-mid)',
         background: 'var(--white)',
       }}>

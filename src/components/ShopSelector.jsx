@@ -5,10 +5,15 @@ export default function ShopSelector({ shops, selectedShopId, onSelect, onAddSho
     return (
       <div style={{
         padding: '12px 16px',
+        margin: '0 -16px',
         borderBottom: '1px solid var(--grey-mid)',
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
+        position: 'sticky',
+        top: 0,
+        background: 'var(--white)',
+        zIndex: 100,
       }}>
         <span style={{ color: 'var(--grey-text)', fontSize: '14px' }}>
           No shops yet —
@@ -32,6 +37,7 @@ export default function ShopSelector({ shops, selectedShopId, onSelect, onAddSho
       display: 'flex',
       gap: '8px',
       padding: '12px 16px',
+      margin: '0 -16px',
       overflowX: 'auto',
       borderBottom: '1px solid var(--grey-mid)',
       scrollbarWidth: 'none',
