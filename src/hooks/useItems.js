@@ -15,7 +15,11 @@ export function useItems() {
 
   useEffect(() => {
     const unsub = onSnapshot(collection(db, 'items'), snapshot => {
-      setItems(snapshot.docs.map(d => ({ id: d.id, ...d.data() })))
+      setItems(
+        snapshot.docs
+          .map(d => ({ id: d.id, ...d.data() }))
+          .sort((a, b) => (a.createdAt?.seconds ?? 0) - (b.createdAt?.seconds ?? 0))
+      )
     })
     return unsub
   }, [])
