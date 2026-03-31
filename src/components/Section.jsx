@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { IconChevronDown } from '@tabler/icons-react'
 import ItemRow from './ItemRow'
 import AddItemInput from './AddItemInput'
 
@@ -14,24 +15,29 @@ export default function Section({ section, items, suggestions, onAdd, onToggle, 
           alignItems: 'center',
           justifyContent: 'space-between',
           width: '100%',
-          padding: '16px 16px 12px',
+          padding: '15px 16px 11px',
           background: 'none',
           border: 'none',
           cursor: 'pointer',
           textAlign: 'left',
         }}
       >
-        <span style={{ fontWeight: 700, fontSize: '15px', letterSpacing: '-0.2px' }}>
+        <span style={{
+          fontWeight: 600,
+          fontSize: '15px',
+          fontFamily: 'var(--font-head)',
+          letterSpacing: '-0.1px',
+        }}>
           {section.name}
         </span>
         <span style={{
-          fontSize: '12px',
-          color: 'var(--grey-text)',
+          color: 'var(--grey-icon)',
           transform: expanded ? 'rotate(180deg)' : 'none',
           transition: 'transform 0.15s',
-          display: 'inline-block',
+          display: 'flex',
+          alignItems: 'center',
         }}>
-          ▾
+          <IconChevronDown size={18} stroke={1.5} />
         </span>
       </button>
 

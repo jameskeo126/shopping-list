@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { IconX, IconCheck } from '@tabler/icons-react'
 
 export default function ItemRow({ item, onToggle, onDelete }) {
   const [showDelete, setShowDelete] = useState(false)
@@ -36,9 +37,9 @@ export default function ItemRow({ item, onToggle, onDelete }) {
         aria-checked={item.checked}
         onClick={() => onToggle(item.id, item.checked)}
         style={{
-          width: '20px',
-          height: '20px',
-          borderRadius: '4px',
+          width: '21px',
+          height: '21px',
+          borderRadius: '5px',
           border: item.checked ? 'none' : '1.5px solid var(--grey-mid)',
           background: item.checked ? 'var(--black)' : 'transparent',
           flexShrink: 0,
@@ -48,7 +49,7 @@ export default function ItemRow({ item, onToggle, onDelete }) {
           justifyContent: 'center',
         }}
       >
-        {item.checked && <span style={{ color: 'white', fontSize: '12px', lineHeight: 1 }}>✓</span>}
+        {item.checked && <IconCheck size={13} stroke={2.5} color="white" />}
       </div>
 
       <span style={{
@@ -68,13 +69,13 @@ export default function ItemRow({ item, onToggle, onDelete }) {
             background: 'none',
             border: 'none',
             cursor: 'pointer',
-            color: 'var(--grey-text)',
-            fontSize: '20px',
-            padding: '0 4px',
-            lineHeight: 1,
+            color: 'var(--grey-icon)',
+            padding: '2px 4px',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
-          ×
+          <IconX size={18} stroke={1.5} />
         </button>
       )}
     </div>

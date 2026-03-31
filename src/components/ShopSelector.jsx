@@ -1,3 +1,5 @@
+import { IconPlus } from '@tabler/icons-react'
+
 export default function ShopSelector({ shops, selectedShopId, onSelect, onAddShop }) {
   if (shops.length === 0) {
     return (
@@ -16,6 +18,7 @@ export default function ShopSelector({ shops, selectedShopId, onSelect, onAddSho
           style={{
             background: 'none', border: 'none', cursor: 'pointer',
             color: 'var(--black)', fontSize: '14px', fontWeight: 600, padding: 0,
+            fontFamily: 'var(--font-body)',
           }}
         >
           Add a shop
@@ -32,6 +35,7 @@ export default function ShopSelector({ shops, selectedShopId, onSelect, onAddSho
       overflowX: 'auto',
       borderBottom: '1px solid var(--grey-mid)',
       scrollbarWidth: 'none',
+      alignItems: 'center',
     }}>
       {shops.map(shop => {
         const active = shop.id === selectedShopId
@@ -45,11 +49,12 @@ export default function ShopSelector({ shops, selectedShopId, onSelect, onAddSho
               border: active ? 'none' : '1px solid var(--grey-mid)',
               background: active ? 'var(--black)' : 'transparent',
               color: active ? 'var(--white)' : 'var(--grey-text)',
-              fontWeight: active ? 700 : 400,
+              fontWeight: active ? 600 : 400,
               fontSize: '14px',
               whiteSpace: 'nowrap',
               cursor: 'pointer',
               flexShrink: 0,
+              fontFamily: 'var(--font-body)',
             }}
           >
             {shop.name}
@@ -60,17 +65,20 @@ export default function ShopSelector({ shops, selectedShopId, onSelect, onAddSho
         aria-label="Add shop"
         onClick={onAddShop}
         style={{
-          padding: '7px 14px',
-          borderRadius: '20px',
+          width: '30px',
+          height: '30px',
+          borderRadius: '50%',
           border: '1px dashed var(--grey-mid)',
           background: 'transparent',
-          color: 'var(--grey-text)',
-          fontSize: '14px',
+          color: 'var(--grey-icon)',
           cursor: 'pointer',
           flexShrink: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        +
+        <IconPlus size={15} stroke={1.5} />
       </button>
     </div>
   )

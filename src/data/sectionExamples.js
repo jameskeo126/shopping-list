@@ -1,0 +1,21 @@
+// 3-4 example items per section shown as caption in ShopEdit
+export const SECTION_EXAMPLES = {
+  'fruit-veg':      'Apples, Bananas, Spinach, Tomatoes',
+  'bakery':         'Sourdough, Croissants, Bagels, Pitta',
+  'meat-fish':      'Chicken, Salmon, Bacon, Mince',
+  'dairy-cheese':   'Milk, Butter, Cheddar, Yoghurt',
+  'chilled':        'Ready meals, Pizza, Hummus, Deli meats',
+  'chilled-drinks': 'Orange juice, Oat milk, Smoothies',
+  'ingredients':    'Olive oil, Cumin, Soy sauce, Paprika',
+  'pasta-rice':     'Spaghetti, Basmati rice, Couscous, Risotto',
+  'world-food':     'Coconut milk, Noodles, Miso paste, Kimchi',
+  'tinned':         'Chopped tomatoes, Baked beans, Tuna, Chickpeas',
+  'tea-coffee':     'English Breakfast, Coffee, Herbal tea',
+  'snacks':         'Crisps, Dark chocolate, Biscuits, Nuts',
+  'drinks':         'Wine, Beer, Sparkling water, Cordial',
+  'frozen':         'Peas, Ice cream, Fish fingers, Edamame',
+  'baby':           'Nappies, Wipes, Formula, Pouches',
+  'health':         'Paracetamol, Vitamins, Plasters, Ibuprofen',
+  'cleaning':       'Washing up liquid, Laundry tabs, Bleach',
+  'misc':           'Batteries, Gift wrap, Flowers, Greetings card',
+}

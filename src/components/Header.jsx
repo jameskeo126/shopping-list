@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { IconSettings2, IconDots, IconTrash } from '@tabler/icons-react'
 
 export default function Header({ onSettingsClick, onClearAll }) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -37,40 +38,48 @@ export default function Header({ onSettingsClick, onClearAll }) {
         background: 'var(--white)',
         zIndex: 100,
       }}>
-        <h1 style={{ fontSize: '22px', fontWeight: 800, letterSpacing: '-0.5px' }}>
+        <h1 style={{
+          fontSize: '22px',
+          fontWeight: 700,
+          fontFamily: 'var(--font-head)',
+          letterSpacing: '-0.3px',
+        }}>
           Shopping List
         </h1>
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
           <button
             aria-label="Settings"
             onClick={onSettingsClick}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px', padding: '4px 8px' }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', display: 'flex', alignItems: 'center', color: 'var(--grey-icon)' }}
           >
-            ⚙
+            <IconSettings2 size={22} stroke={1.5} />
           </button>
           <div ref={menuRef} style={{ position: 'relative' }}>
             <button
               aria-label="More options"
               onClick={() => setMenuOpen(o => !o)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px', padding: '4px 8px' }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', display: 'flex', alignItems: 'center', color: 'var(--grey-icon)' }}
             >
-              ⋯
+              <IconDots size={22} stroke={1.5} />
             </button>
             {menuOpen && (
               <div style={{
                 position: 'absolute', right: 0, top: '100%',
                 background: 'var(--white)', border: '1px solid var(--grey-mid)',
-                borderRadius: '8px', boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
-                minWidth: '160px', zIndex: 200,
+                borderRadius: '10px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                minWidth: '170px', zIndex: 200, overflow: 'hidden',
               }}>
                 <button
                   onClick={handleClearAll}
                   style={{
-                    display: 'block', width: '100%', padding: '14px 16px',
+                    display: 'flex', alignItems: 'center', gap: '10px',
+                    width: '100%', padding: '13px 16px',
                     background: 'none', border: 'none', cursor: 'pointer',
-                    textAlign: 'left', fontSize: '15px',
+                    textAlign: 'left', fontSize: '15px', color: 'var(--black)',
+                    fontFamily: 'var(--font-body)',
                   }}
                 >
+                  <IconTrash size={17} stroke={1.5} color="var(--grey-icon)" />
                   Clear all items
                 </button>
               </div>
@@ -81,22 +90,27 @@ export default function Header({ onSettingsClick, onClearAll }) {
 
       {confirmClear && (
         <div style={{
-          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)',
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.35)',
           display: 'flex', alignItems: 'flex-end', zIndex: 500,
         }}>
           <div style={{
             background: 'var(--white)', width: '100%', padding: '24px 16px 32px',
-            borderRadius: '16px 16px 0 0',
+            borderRadius: '20px 20px 0 0',
           }}>
-            <h2 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '8px' }}>Clear all items?</h2>
-            <p style={{ color: 'var(--grey-text)', marginBottom: '24px' }}>This cannot be undone.</p>
+            <h2 style={{ fontSize: '18px', fontWeight: 700, fontFamily: 'var(--font-head)', marginBottom: '6px' }}>
+              Clear all items?
+            </h2>
+            <p style={{ color: 'var(--grey-text)', marginBottom: '24px', fontSize: '15px' }}>
+              This cannot be undone.
+            </p>
             <button
               onClick={handleConfirm}
               style={{
                 display: 'block', width: '100%', padding: '16px',
                 background: 'var(--black)', color: 'var(--white)',
-                border: 'none', borderRadius: '8px', fontSize: '16px',
-                fontWeight: 600, cursor: 'pointer', marginBottom: '12px',
+                border: 'none', borderRadius: '10px', fontSize: '16px',
+                fontWeight: 600, cursor: 'pointer', marginBottom: '10px',
+                fontFamily: 'var(--font-body)',
               }}
             >
               Clear All
@@ -106,8 +120,8 @@ export default function Header({ onSettingsClick, onClearAll }) {
               style={{
                 display: 'block', width: '100%', padding: '16px',
                 background: 'none', color: 'var(--black)',
-                border: '1px solid var(--grey-mid)', borderRadius: '8px',
-                fontSize: '16px', cursor: 'pointer',
+                border: '1px solid var(--grey-mid)', borderRadius: '10px',
+                fontSize: '16px', cursor: 'pointer', fontFamily: 'var(--font-body)',
               }}
             >
               Cancel
