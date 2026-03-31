@@ -66,11 +66,11 @@ export default function AddItemInput({ onAdd, suggestions }) {
         style={{
           width: '100%',
           border: 'none',
-          borderBottom: '1.5px solid var(--black)',
           outline: 'none',
           fontSize: '15px',
           padding: '4px 0',
           background: 'transparent',
+          fontFamily: 'var(--font-body)',
         }}
       />
       {filtered.length > 0 && (

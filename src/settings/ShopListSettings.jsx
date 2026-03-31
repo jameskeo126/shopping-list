@@ -65,8 +65,9 @@ export default function ShopListSettings({ onEditShop }) {
             }}
             placeholder="Shop name"
             style={{
-              flex: 1, border: 'none', borderBottom: '1.5px solid var(--black)',
+              flex: 1, border: 'none',
               outline: 'none', fontSize: '16px', padding: '4px 0', background: 'transparent',
+              fontFamily: 'var(--font-body)',
             }}
           />
           <button
