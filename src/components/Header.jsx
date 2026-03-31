@@ -1,24 +1,8 @@
-import { useState, useRef, useEffect } from 'react'
-import { IconMapPin, IconDots, IconTrash } from '@tabler/icons-react'
+import { useState } from 'react'
+import { IconMapPin, IconClipboardX } from '@tabler/icons-react'
 
 export default function Header({ onSettingsClick, onClearAll }) {
-  const [menuOpen, setMenuOpen] = useState(false)
   const [confirmClear, setConfirmClear] = useState(false)
-  const menuRef = useRef(null)
-
-  useEffect(() => {
-    if (!menuOpen) return
-    function handleClick(e) {
-      if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false)
-    }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }, [menuOpen])
-
-  function handleClearAll() {
-    setMenuOpen(false)
-    setConfirmClear(true)
-  }
 
   function handleConfirm() {
     setConfirmClear(false)
@@ -52,37 +36,13 @@ export default function Header({ onSettingsClick, onClearAll }) {
           >
             <IconMapPin size={22} stroke={1.5} />
           </button>
-          <div ref={menuRef} style={{ position: 'relative' }}>
-            <button
-              aria-label="More options"
-              onClick={() => setMenuOpen(o => !o)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', display: 'flex', alignItems: 'center', color: 'var(--grey-icon)' }}
-            >
-              <IconDots size={22} stroke={1.5} />
-            </button>
-            {menuOpen && (
-              <div style={{
-                position: 'absolute', right: 0, top: '100%',
-                background: 'var(--white)', border: '1px solid var(--grey-mid)',
-                borderRadius: '10px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                minWidth: '170px', zIndex: 200, overflow: 'hidden',
-              }}>
-                <button
-                  onClick={handleClearAll}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: '10px',
-                    width: '100%', padding: '13px 16px',
-                    background: 'none', border: 'none', cursor: 'pointer',
-                    textAlign: 'left', fontSize: '15px', color: 'var(--black)',
-                    fontFamily: 'var(--font-body)',
-                  }}
-                >
-                  <IconTrash size={17} stroke={1.5} color="var(--grey-icon)" />
-                  Clear all items
-                </button>
-              </div>
-            )}
-          </div>
+          <button
+            aria-label="Clear all items"
+            onClick={() => setConfirmClear(true)}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', display: 'flex', alignItems: 'center', color: '#c0504d' }}
+          >
+            <IconClipboardX size={22} stroke={1.5} />
+          </button>
         </div>
       </header>
 
@@ -92,7 +52,6 @@ export default function Header({ onSettingsClick, onClearAll }) {
           style={{
             position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.35)',
             display: 'flex', zIndex: 500,
-            // Mobile: drawer from bottom. Desktop (≥480px): centered modal.
             alignItems: window.innerWidth >= 480 ? 'center' : 'flex-end',
             justifyContent: 'center',
           }}
@@ -102,7 +61,6 @@ export default function Header({ onSettingsClick, onClearAll }) {
             style={{
               background: 'var(--white)',
               padding: '24px 16px 32px',
-              // Mobile: full-width bottom sheet
               ...(window.innerWidth < 480
                 ? { width: '100%', borderRadius: '20px 20px 0 0' }
                 : { width: '360px', borderRadius: '16px', padding: '32px 28px' }
