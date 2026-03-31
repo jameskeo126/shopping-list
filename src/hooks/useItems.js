@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
   collection, onSnapshot, addDoc, updateDoc,
-  deleteDoc, doc, setDoc, serverTimestamp,
+  deleteDoc, doc, setDoc, Timestamp,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 
@@ -31,7 +31,7 @@ export function useItems() {
       name: trimmed,
       sectionId,
       checked: false,
-      createdAt: serverTimestamp(),
+      createdAt: Timestamp.now(),
     })
     // History is NOT written here — the item may be misspelled.
     // It's written when the item is checked off or manually edited.

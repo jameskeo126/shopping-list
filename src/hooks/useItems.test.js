@@ -16,7 +16,7 @@ vi.mock('firebase/firestore', () => ({
   updateDoc:       vi.fn(() => Promise.resolve()),
   deleteDoc:       vi.fn(() => Promise.resolve()),
   doc:             vi.fn((db, col, id) => ({ path: `${col}/${id}` })),
-  serverTimestamp: vi.fn(() => 'SERVER_TIMESTAMP'),
+  Timestamp: { now: vi.fn(() => ({ seconds: Date.now() / 1000, nanoseconds: 0 })) },
 }))
 vi.mock('../firebase', () => ({ db: {} }))
 
