@@ -8,6 +8,10 @@ const items = [
   { id: 'i2', name: 'Bananas', sectionId: 'fruit-veg', checked: true  },
 ]
 
+function getGrid(container) {
+  return container.querySelector('[data-expanded]')
+}
+
 describe('Section', () => {
   it('renders section name', () => {
     render(<Section section={section} items={items} onAdd={vi.fn()} onToggle={vi.fn()} onDelete={vi.fn()} />)
@@ -15,20 +19,20 @@ describe('Section', () => {
   })
 
   it('expands by default when items exist', () => {
-    render(<Section section={section} items={items} onAdd={vi.fn()} onToggle={vi.fn()} onDelete={vi.fn()} />)
-    expect(screen.getByText('Apples')).toBeInTheDocument()
+    const { container } = render(<Section section={section} items={items} onAdd={vi.fn()} onToggle={vi.fn()} onDelete={vi.fn()} />)
+    expect(getGrid(container).dataset.expanded).toBe('true')
   })
 
   it('collapses by default when no items', () => {
-    render(<Section section={section} items={[]} onAdd={vi.fn()} onToggle={vi.fn()} onDelete={vi.fn()} />)
-    expect(screen.queryByText('+ Add item')).not.toBeInTheDocument()
+    const { container } = render(<Section section={section} items={[]} onAdd={vi.fn()} onToggle={vi.fn()} onDelete={vi.fn()} />)
+    expect(getGrid(container).dataset.expanded).toBe('false')
   })
 
   it('toggles collapse when header is clicked', () => {
-    render(<Section section={section} items={items} onAdd={vi.fn()} onToggle={vi.fn()} onDelete={vi.fn()} />)
+    const { container } = render(<Section section={section} items={items} onAdd={vi.fn()} onToggle={vi.fn()} onDelete={vi.fn()} />)
     fireEvent.click(screen.getByText('Fruit & Veg'))
-    expect(screen.queryByText('Apples')).not.toBeInTheDocument()
+    expect(getGrid(container).dataset.expanded).toBe('false')
     fireEvent.click(screen.getByText('Fruit & Veg'))
-    expect(screen.getByText('Apples')).toBeInTheDocument()
+    expect(getGrid(container).dataset.expanded).toBe('true')
   })
 })

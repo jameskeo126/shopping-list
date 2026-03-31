@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react'
-import { IconPlus } from '@tabler/icons-react'
 import { SECTION_ICONS } from '../data/sectionIcons'
 import ItemRow from './ItemRow'
 import AddItemInput from './AddItemInput'
@@ -49,29 +48,29 @@ export default function Section({ section, items, suggestions, onAdd, onToggle, 
         }}>
           {section.name}
         </span>
-        <span style={{
-          color: 'var(--grey-icon)',
-          transform: expanded ? 'rotate(45deg)' : 'rotate(0deg)',
-          transition: 'transform 0.2s ease',
-          display: 'flex',
-          alignItems: 'center',
-          flexShrink: 0,
-        }}>
-          <IconPlus size={18} stroke={1.5} />
-        </span>
       </button>
 
-      {expanded && (
-        <div style={{ padding: '0 0 16px' }}>
-          {items.map(item => (
-            <ItemRow key={item.id} item={item} onToggle={onToggle} onDelete={onDelete} />
-          ))}
-          <AddItemInput
-            onAdd={name => onAdd(name, section.id)}
-            suggestions={suggestions || []}
-          />
+      {/* Grid-rows animation: 0fr → 1fr is the cleanest CSS expand trick */}
+      <div
+        data-expanded={expanded}
+        style={{
+          display: 'grid',
+          gridTemplateRows: expanded ? '1fr' : '0fr',
+          transition: 'grid-template-rows 0.22s ease',
+        }}
+      >
+        <div style={{ overflow: 'hidden' }}>
+          <div style={{ padding: '0 0 16px' }}>
+            {items.map(item => (
+              <ItemRow key={item.id} item={item} onToggle={onToggle} onDelete={onDelete} />
+            ))}
+            <AddItemInput
+              onAdd={name => onAdd(name, section.id)}
+              suggestions={suggestions || []}
+            />
+          </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }
