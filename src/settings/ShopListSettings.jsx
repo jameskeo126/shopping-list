@@ -3,6 +3,7 @@ import { collection, addDoc, deleteDoc, doc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useShops } from '../hooks/useShops'
 import { SECTIONS } from '../data/sections'
+import { IconX, IconPlus } from '@tabler/icons-react'
 
 export default function ShopListSettings({ onEditShop }) {
   const shops = useShops()
@@ -43,10 +44,11 @@ export default function ShopListSettings({ onEditShop }) {
             onClick={() => handleDelete(shop.id)}
             style={{
               background: 'none', border: 'none', cursor: 'pointer',
-              color: 'var(--grey-text)', fontSize: '20px', padding: '4px 8px',
+              color: 'var(--grey-icon)', padding: '4px 8px',
+              display: 'flex', alignItems: 'center',
             }}
           >
-            ×
+            <IconX size={18} stroke={1.5} />
           </button>
         </div>
       ))}
@@ -84,9 +86,12 @@ export default function ShopListSettings({ onEditShop }) {
           style={{
             background: 'none', border: 'none', cursor: 'pointer',
             color: 'var(--grey-text)', fontSize: '14px', padding: '12px 0',
+            display: 'flex', alignItems: 'center', gap: '6px',
+            fontFamily: 'var(--font-body)',
           }}
         >
-          + Add shop
+          <IconPlus size={15} stroke={1.5} />
+          Add shop
         </button>
       )}
     </div>

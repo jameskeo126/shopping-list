@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { SECTIONS } from '../data/sections'
+import { SECTION_EXAMPLES } from '../data/sectionExamples'
+import { IconArrowLeft, IconGripVertical } from '@tabler/icons-react'
 import {
   DndContext,
   closestCenter,
@@ -20,6 +22,7 @@ import { CSS } from '@dnd-kit/utilities'
 
 function SortableSection({ id, name }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
+  const examples = SECTION_EXAMPLES[id]
   return (
     <div
       ref={setNodeRef}
@@ -28,23 +31,30 @@ function SortableSection({ id, name }) {
         transition,
         display: 'flex',
         alignItems: 'center',
-        padding: '14px 0',
+        padding: '12px 0',
         borderBottom: '1px solid var(--grey-light)',
         background: isDragging ? 'var(--grey-light)' : 'transparent',
         borderRadius: isDragging ? '6px' : 0,
         opacity: isDragging ? 0.8 : 1,
       }}
     >
-      <span style={{ flex: 1, fontSize: '15px' }}>{name}</span>
+      <div style={{ flex: 1 }}>
+        <div style={{ fontSize: '15px', fontWeight: 500 }}>{name}</div>
+        {examples && (
+          <div style={{ fontSize: '12px', color: 'var(--grey-text)', marginTop: '2px' }}>
+            {examples}
+          </div>
+        )}
+      </div>
       <span
         {...attributes}
         {...listeners}
         style={{
-          color: 'var(--grey-text)', fontSize: '20px', padding: '0 4px',
-          touchAction: 'none', cursor: 'grab',
+          color: 'var(--grey-icon)', padding: '0 4px',
+          touchAction: 'none', cursor: 'grab', display: 'flex', alignItems: 'center',
         }}
       >
-        ⠿
+        <IconGripVertical size={18} stroke={1.5} />
       </span>
     </div>
   )
@@ -90,16 +100,17 @@ export default function ShopEdit({ shop, onBack }) {
         <button
           aria-label="Back"
           onClick={onBack}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px', padding: '4px 8px 4px 0' }}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px 4px 0', display: 'flex', alignItems: 'center', color: 'var(--grey-icon)' }}
         >
-          ←
+          <IconArrowLeft size={22} stroke={1.5} />
         </button>
         <input
           value={name}
           onChange={e => setName(e.target.value)}
           onBlur={handleNameBlur}
           style={{
-            flex: 1, fontSize: '22px', fontWeight: 800, letterSpacing: '-0.5px',
+            flex: 1, fontSize: '22px', fontWeight: 700, letterSpacing: '-0.3px',
+            fontFamily: 'var(--font-head)',
             border: 'none', outline: 'none', background: 'transparent',
           }}
         />

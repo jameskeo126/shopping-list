@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { IconArrowLeft } from '@tabler/icons-react'
 import ShopListSettings from './ShopListSettings'
 import ShopEdit from './ShopEdit'
 
@@ -19,11 +20,11 @@ export default function SettingsScreen({ onBack }) {
         <button
           aria-label="Back"
           onClick={onBack}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px', padding: '4px 8px 4px 0' }}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px 4px 0', display: 'flex', alignItems: 'center', color: 'var(--grey-icon)' }}
         >
-          ←
+          <IconArrowLeft size={22} stroke={1.5} />
         </button>
-        <h1 style={{ fontSize: '22px', fontWeight: 800, letterSpacing: '-0.5px' }}>Settings</h1>
+        <h1 style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'var(--font-head)', letterSpacing: '-0.3px' }}>Settings</h1>
       </header>
 
       <div style={{ padding: '24px 16px' }}>

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { IconPlus } from '@tabler/icons-react'
 
 export default function AddItemInput({ onAdd, suggestions }) {
   const [active, setActive] = useState(false)
@@ -40,9 +41,14 @@ export default function AddItemInput({ onAdd, suggestions }) {
           cursor: 'pointer',
           padding: '10px 0',
           textAlign: 'left',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          fontFamily: 'var(--font-body)',
         }}
       >
-        + Add item
+        <IconPlus size={15} stroke={1.5} />
+        Add item
       </button>
     )
   }
