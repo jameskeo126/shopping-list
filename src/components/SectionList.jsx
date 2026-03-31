@@ -12,7 +12,7 @@ export default function SectionList({ sections, items, shop, suggestions, onAdd,
     : [...sections].sort((a, b) => a.defaultOrder - b.defaultOrder)
 
   return (
-    <div style={{ flex: 1, overflowY: 'auto' }}>
+    <div style={{ flex: 1, overflowY: 'auto', paddingTop: '8px' }}>
       {ordered.map(section => (
         <Section
           key={section.id}

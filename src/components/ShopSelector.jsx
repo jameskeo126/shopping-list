@@ -36,6 +36,10 @@ export default function ShopSelector({ shops, selectedShopId, onSelect, onAddSho
       borderBottom: '1px solid var(--grey-mid)',
       scrollbarWidth: 'none',
       alignItems: 'center',
+      position: 'sticky',
+      top: 0,
+      background: 'var(--white)',
+      zIndex: 100,
     }}>
       {shops.map(shop => {
         const active = shop.id === selectedShopId

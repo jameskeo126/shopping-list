@@ -32,6 +32,7 @@ export default function Section({ section, items, suggestions, onAdd, onToggle, 
           cursor: 'pointer',
           textAlign: 'left',
           gap: '10px',
+          color: 'var(--black)',
         }}
       >
         {SectionIcon && (

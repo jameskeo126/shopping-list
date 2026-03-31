@@ -33,10 +33,7 @@ export default function Header({ onSettingsClick, onClearAll }) {
         justifyContent: 'space-between',
         padding: '20px 16px 12px',
         borderBottom: '1px solid var(--grey-mid)',
-        position: 'sticky',
-        top: 0,
         background: 'var(--white)',
-        zIndex: 100,
       }}>
         <h1 style={{
           fontSize: '22px',
