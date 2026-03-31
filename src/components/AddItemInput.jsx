@@ -67,7 +67,7 @@ export default function AddItemInput({ onAdd, suggestions }) {
           width: '100%',
           border: 'none',
           outline: 'none',
-          fontSize: '15px',
+          fontSize: '16px',
           padding: '4px 0',
           background: 'transparent',
           fontFamily: 'var(--font-body)',

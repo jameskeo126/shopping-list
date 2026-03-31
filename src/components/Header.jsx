@@ -37,7 +37,7 @@ export default function Header({ onSettingsClick, onClearAll }) {
         background: 'var(--white)',
       }}>
         <h1 style={{
-          fontSize: '22px',
+          fontSize: '28px',
           fontWeight: 700,
           fontFamily: 'var(--font-head)',
           letterSpacing: '-0.3px',
