@@ -24,16 +24,10 @@ export default function SettingsScreen({ onBack }) {
         >
           <IconArrowLeft size={22} stroke={1.5} />
         </button>
-        <h1 style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'var(--font-head)', letterSpacing: '-0.3px' }}>Settings</h1>
+        <h1 style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'var(--font-head)', letterSpacing: '-0.3px' }}>Shops</h1>
       </header>
 
       <div style={{ padding: '24px 16px' }}>
-        <h2 style={{
-          fontSize: '13px', fontWeight: 700, letterSpacing: '0.8px',
-          textTransform: 'uppercase', color: 'var(--grey-text)', marginBottom: '12px',
-        }}>
-          Shops
-        </h2>
         <ShopListSettings onEditShop={setEditingShop} />
       </div>
     </div>

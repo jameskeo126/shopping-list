@@ -15,10 +15,10 @@ vi.mock('firebase/firestore', () => ({
 vi.mock('../firebase', () => ({ db: {} }))
 
 describe('SettingsScreen', () => {
-  it('renders back button and Settings heading', () => {
+  it('renders back button and Shops heading', () => {
     render(<SettingsScreen onBack={vi.fn()} />)
     expect(screen.getByLabelText('Back')).toBeInTheDocument()
-    expect(screen.getByText('Settings')).toBeInTheDocument()
+    expect(screen.getByText('Shops')).toBeInTheDocument()
   })
 
   it('calls onBack when back button clicked', () => {
