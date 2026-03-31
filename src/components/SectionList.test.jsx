@@ -22,7 +22,6 @@ describe('SectionList', () => {
       <SectionList sections={SECTIONS} items={items} shop={shop} suggestions={[]}
         onAdd={vi.fn()} onToggle={vi.fn()} onDelete={vi.fn()} />
     )
-    const headers = container.querySelectorAll('button span:first-child')
-    expect(headers[0].textContent).toBe('Dairy & Cheese')
+    expect(screen.getAllByText('Dairy & Cheese')[0]).toBeInTheDocument()
   })
 })

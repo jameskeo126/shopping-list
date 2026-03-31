@@ -1,10 +1,22 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { IconPlus } from '@tabler/icons-react'
+import { SECTION_ICONS } from '../data/sectionIcons'
 import ItemRow from './ItemRow'
 import AddItemInput from './AddItemInput'
 
 export default function Section({ section, items, suggestions, onAdd, onToggle, onDelete }) {
   const [expanded, setExpanded] = useState(items.length > 0)
+  const didInitRef = useRef(false)
+
+  // Firestore data loads async — open the section the first time items arrive
+  useEffect(() => {
+    if (!didInitRef.current && items.length > 0) {
+      didInitRef.current = true
+      setExpanded(true)
+    }
+  }, [items.length])
+
+  const SectionIcon = SECTION_ICONS[section.id]
 
   return (
     <div style={{ marginBottom: '8px' }}>
@@ -13,16 +25,22 @@ export default function Section({ section, items, suggestions, onAdd, onToggle, 
         style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
           width: '100%',
           padding: '12px 16px',
           background: 'none',
           border: 'none',
           cursor: 'pointer',
           textAlign: 'left',
+          gap: '10px',
         }}
       >
+        {SectionIcon && (
+          <span style={{ color: 'var(--grey-icon)', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+            <SectionIcon size={18} stroke={1.5} />
+          </span>
+        )}
         <span style={{
+          flex: 1,
           fontWeight: 600,
           fontSize: '15px',
           fontFamily: 'var(--font-head)',
@@ -36,6 +54,7 @@ export default function Section({ section, items, suggestions, onAdd, onToggle, 
           transition: 'transform 0.2s ease',
           display: 'flex',
           alignItems: 'center',
+          flexShrink: 0,
         }}>
           <IconPlus size={18} stroke={1.5} />
         </span>
