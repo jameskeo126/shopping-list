@@ -65,6 +65,7 @@ export default function AddItemInput({ onAdd, suggestions }) {
         onChange={e => setValue(e.target.value)}
         onKeyDown={handleKeyDown}
         onBlur={() => { if (!value.trim()) setActive(false) }}
+        enterKeyHint="done"
         placeholder="Item name…"
         style={{
           width: '100%',
