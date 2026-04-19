@@ -29,8 +29,3 @@ html, body {
   padding-right: 16px;
   padding-bottom: env(safe-area-inset-bottom);
 }
-
-/* iPhone notch / Dynamic Island safe area */
-header {
-  padding-top: max(20px, env(safe-area-inset-top));
-}

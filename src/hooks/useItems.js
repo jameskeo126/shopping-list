@@ -62,5 +62,9 @@ export function useItems() {
     await Promise.all(items.map(item => deleteDoc(doc(db, 'items', item.id))))
   }
 
-  return { items, addItem, editItem, toggleItem, deleteItem, clearAll }
+  async function clearChecked() {
+    await Promise.all(items.filter(i => i.checked).map(item => deleteDoc(doc(db, 'items', item.id))))
+  }
+
+  return { items, addItem, editItem, toggleItem, deleteItem, clearAll, clearChecked }
 }

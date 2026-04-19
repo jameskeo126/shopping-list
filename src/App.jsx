@@ -13,7 +13,7 @@ export default function App() {
   const [view, setView] = useState('list') // 'list' | 'settings'
   const [selectedShopId, setSelectedShopId] = useState(null)
 
-  const { items, addItem, editItem, toggleItem, deleteItem, clearAll } = useItems()
+  const { items, addItem, editItem, toggleItem, deleteItem, clearAll, clearChecked } = useItems()
   const shops = useShops()
   const history = useHistory()
 
@@ -34,13 +34,22 @@ export default function App() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
-      <Header onSettingsClick={() => setView('settings')} onClearAll={clearAll} />
-      <ShopSelector
-        shops={shops}
-        selectedShopId={selectedShopId}
-        onSelect={setSelectedShopId}
-        onAddShop={() => setView('settings')}
-      />
+      <div style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        background: 'var(--white)',
+        margin: '0 -16px',
+        paddingTop: 'env(safe-area-inset-top, 0px)',
+      }}>
+        <Header onSettingsClick={() => setView('settings')} onClearAll={clearAll} onClearChecked={clearChecked} />
+        <ShopSelector
+          shops={shops}
+          selectedShopId={selectedShopId}
+          onSelect={setSelectedShopId}
+          onAddShop={() => setView('settings')}
+        />
+      </div>
       <SectionList
         sections={SECTIONS}
         items={items}
