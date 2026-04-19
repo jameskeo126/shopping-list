@@ -77,6 +77,7 @@ export default function ItemRow({ item, onToggle, onEdit, onDelete }) {
           onChange={e => setEditValue(e.target.value)}
           onKeyDown={handleKeyDown}
           onBlur={handleSave}
+          enterKeyHint="done"
           style={{
             flex: 1,
             fontSize: '16px',
