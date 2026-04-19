@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 .superpowers/
 .env.local
+.vercel
+.claude/
+docs/
