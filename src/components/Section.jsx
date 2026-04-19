@@ -3,7 +3,7 @@ import { SECTION_ICONS } from '../data/sectionIcons'
 import ItemRow from './ItemRow'
 import AddItemInput from './AddItemInput'
 
-export default function Section({ section, items, suggestions, onAdd, onEdit, onToggle, onDelete }) {
+export default function Section({ section, items, suggestions, onAdd, onEdit, onToggle, onDelete, collapseSignal }) {
   const [expanded, setExpanded] = useState(items.length > 0)
   const didInitRef = useRef(false)
 
@@ -14,6 +14,10 @@ export default function Section({ section, items, suggestions, onAdd, onEdit, on
       setExpanded(true)
     }
   }, [items.length])
+
+  useEffect(() => {
+    if (collapseSignal?.ids.includes(section.id)) setExpanded(false)
+  }, [collapseSignal, section.id])
 
   const SectionIcon = SECTION_ICONS[section.id]
 

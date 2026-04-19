@@ -1,6 +1,6 @@
 import Section from './Section'
 
-export default function SectionList({ sections, items, shop, suggestions, onAdd, onEdit, onToggle, onDelete }) {
+export default function SectionList({ sections, items, shop, suggestions, onAdd, onEdit, onToggle, onDelete, collapseSignal }) {
   const ordered = shop
     ? [...sections].sort((a, b) => {
         const ai = shop.sectionOrder.indexOf(a.id)
@@ -23,6 +23,7 @@ export default function SectionList({ sections, items, shop, suggestions, onAdd,
           onEdit={onEdit}
           onToggle={onToggle}
           onDelete={onDelete}
+          collapseSignal={collapseSignal}
         />
       ))}
     </div>

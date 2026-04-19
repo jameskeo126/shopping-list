@@ -12,8 +12,23 @@ import SettingsScreen from './settings/SettingsScreen'
 export default function App() {
   const [view, setView] = useState('list') // 'list' | 'settings'
   const [selectedShopId, setSelectedShopId] = useState(null)
+  const [collapseSignal, setCollapseSignal] = useState(null) // { token, ids }
 
   const { items, addItem, editItem, toggleItem, deleteItem, clearAll, clearChecked } = useItems()
+
+  async function handleClearChecked() {
+    // Determine sections that will be empty after clearing (all items are checked)
+    const counts = {}
+    for (const it of items) {
+      const c = counts[it.sectionId] ||= { checked: 0, unchecked: 0 }
+      c[it.checked ? 'checked' : 'unchecked']++
+    }
+    const ids = Object.entries(counts)
+      .filter(([, c]) => c.checked > 0 && c.unchecked === 0)
+      .map(([id]) => id)
+    await clearChecked()
+    if (ids.length) setCollapseSignal({ token: Date.now(), ids })
+  }
   const shops = useShops()
   const history = useHistory()
 
@@ -42,7 +57,7 @@ export default function App() {
         margin: '0 -16px',
         paddingTop: 'env(safe-area-inset-top, 0px)',
       }}>
-        <Header onSettingsClick={() => setView('settings')} onClearAll={clearAll} onClearChecked={clearChecked} />
+        <Header onSettingsClick={() => setView('settings')} onClearAll={clearAll} onClearChecked={handleClearChecked} />
         <ShopSelector
           shops={shops}
           selectedShopId={selectedShopId}
@@ -59,6 +74,7 @@ export default function App() {
         onEdit={editItem}
         onToggle={toggleItem}
         onDelete={deleteItem}
+        collapseSignal={collapseSignal}
       />
     </div>
   )
