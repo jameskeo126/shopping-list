@@ -45,6 +45,7 @@ export default function AddItemInput({ onAdd, suggestions }) {
           alignItems: 'center',
           gap: '6px',
           fontFamily: 'var(--font-body)',
+          width: '100%',
         }}
       >
         <IconPlus size={15} stroke={1.5} />
