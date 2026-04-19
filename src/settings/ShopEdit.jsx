@@ -62,11 +62,16 @@ function SortableSection({ id, name }) {
 
 export default function ShopEdit({ shop, onBack }) {
   const [name, setName] = useState(shop.name)
-  const [order, setOrder] = useState(
-    shop.sectionOrder && shop.sectionOrder.length === SECTIONS.length
-      ? shop.sectionOrder
-      : SECTIONS.map(s => s.id)
-  )
+  const [order, setOrder] = useState(() => {
+    const validIds = new Set(SECTIONS.map(s => s.id))
+    if (!shop.sectionOrder) return SECTIONS.map(s => s.id)
+    // Keep only sections that still exist
+    const filtered = shop.sectionOrder.filter(id => validIds.has(id))
+    // Append any new sections not in the saved order
+    const savedSet = new Set(filtered)
+    const missing = SECTIONS.filter(s => !savedSet.has(s.id)).map(s => s.id)
+    return [...filtered, ...missing]
+  })
 
   const sensors = useSensors(
     useSensor(PointerSensor),

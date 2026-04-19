@@ -4,7 +4,7 @@ import {
   IconMeat,
   IconMilk,
   IconFridge,
-  IconGlassFull,
+
   IconSalt,
   IconGrain,
   IconWorld,
@@ -25,7 +25,7 @@ export const SECTION_ICONS = {
   'meat-fish':      IconMeat,
   'dairy-cheese':   IconMilk,
   'chilled':        IconFridge,
-  'chilled-drinks': IconGlassFull,
+
   'ingredients':    IconSalt,
   'pasta-rice':     IconGrain,
   'world-food':     IconWorld,
