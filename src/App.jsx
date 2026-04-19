@@ -29,6 +29,12 @@ export default function App() {
     await clearChecked()
     if (ids.length) setCollapseSignal({ token: Date.now(), ids })
   }
+
+  async function handleClearAll() {
+    const ids = [...new Set(items.map(it => it.sectionId))]
+    await clearAll()
+    if (ids.length) setCollapseSignal({ token: Date.now(), ids })
+  }
   const shops = useShops()
   const history = useHistory()
 
@@ -57,7 +63,7 @@ export default function App() {
         margin: '0 -16px',
         paddingTop: 'env(safe-area-inset-top, 0px)',
       }}>
-        <Header onSettingsClick={() => setView('settings')} onClearAll={clearAll} onClearChecked={handleClearChecked} />
+        <Header onSettingsClick={() => setView('settings')} onClearAll={handleClearAll} onClearChecked={handleClearChecked} />
         <ShopSelector
           shops={shops}
           selectedShopId={selectedShopId}
