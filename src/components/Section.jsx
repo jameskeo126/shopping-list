@@ -30,13 +30,13 @@ export default function Section({ section, items, suggestions, onAdd, onEdit, on
           border: 'none',
           cursor: 'pointer',
           textAlign: 'left',
-          gap: '10px',
+          gap: '12px',
           color: 'var(--black)',
         }}
       >
         {SectionIcon && (
-          <span style={{ color: 'var(--grey-icon)', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-            <SectionIcon size={18} stroke={1.5} />
+          <span style={{ color: 'var(--grey-icon)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, width: '21px' }}>
+            <SectionIcon size={20} stroke={1.5} />
           </span>
         )}
         <span style={{

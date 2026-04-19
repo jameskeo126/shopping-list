@@ -43,12 +43,14 @@ export default function AddItemInput({ onAdd, suggestions }) {
           textAlign: 'left',
           display: 'flex',
           alignItems: 'center',
-          gap: '6px',
+          gap: '12px',
           fontFamily: 'var(--font-body)',
           width: '100%',
         }}
       >
-        <IconPlus size={15} stroke={1.5} />
+        <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '21px', flexShrink: 0 }}>
+          <IconPlus size={15} stroke={1.5} />
+        </span>
         Add item
       </button>
     )
