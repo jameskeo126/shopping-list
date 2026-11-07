@@ -7,10 +7,11 @@ import { useHistory } from './hooks/useHistory'
 import Header from './components/Header'
 import ShopSelector from './components/ShopSelector'
 import SectionList from './components/SectionList'
+import MealPlanScreen from './components/MealPlanScreen'
 import SettingsScreen from './settings/SettingsScreen'
 
 export default function App() {
-  const [view, setView] = useState('list') // 'list' | 'settings'
+  const [view, setView] = useState('list') // 'list' | 'settings' | 'meals'
   const [selectedShopId, setSelectedShopId] = useState(null)
   const [collapseSignal, setCollapseSignal] = useState(null) // { token, ids }
 
@@ -53,6 +54,10 @@ export default function App() {
     return <SettingsScreen onBack={() => setView('list')} />
   }
 
+  if (view === 'meals') {
+    return <MealPlanScreen onBack={() => setView('list')} />
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
       <div style={{
@@ -63,7 +68,12 @@ export default function App() {
         margin: '0 -16px',
         paddingTop: 'env(safe-area-inset-top, 0px)',
       }}>
-        <Header onSettingsClick={() => setView('settings')} onClearAll={handleClearAll} onClearChecked={handleClearChecked} />
+        <Header
+          onSettingsClick={() => setView('settings')}
+          onMealPlanClick={() => setView('meals')}
+          onClearAll={handleClearAll}
+          onClearChecked={handleClearChecked}
+        />
         <ShopSelector
           shops={shops}
           selectedShopId={selectedShopId}

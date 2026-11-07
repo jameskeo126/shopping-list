@@ -15,24 +15,34 @@ describe('Header', () => {
     expect(onSettings).toHaveBeenCalled()
   })
 
-  it('shows clear all option in menu', () => {
+  it('calls onMealPlanClick from an icon placed before Settings', () => {
+    const onMealPlan = vi.fn()
+    render(<Header onSettingsClick={vi.fn()} onMealPlanClick={onMealPlan} onClearAll={vi.fn()} />)
+    const mealPlan = screen.getByLabelText('Meal plan')
+    fireEvent.click(mealPlan)
+    expect(onMealPlan).toHaveBeenCalled()
+    expect(mealPlan.compareDocumentPosition(screen.getByLabelText('Settings')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
+  it('shows clear options in menu', () => {
     render(<Header onSettingsClick={vi.fn()} onClearAll={vi.fn()} />)
-    fireEvent.click(screen.getByLabelText('More options'))
-    expect(screen.getByText('Clear all items')).toBeInTheDocument()
+    fireEvent.click(screen.getByLabelText('Clear items'))
+    expect(screen.getByText('Clear Checked')).toBeInTheDocument()
+    expect(screen.getByText('Clear All')).toBeInTheDocument()
   })
 
   it('shows confirmation dialog before clearing', () => {
     render(<Header onSettingsClick={vi.fn()} onClearAll={vi.fn()} />)
-    fireEvent.click(screen.getByLabelText('More options'))
-    fireEvent.click(screen.getByText('Clear all items'))
+    fireEvent.click(screen.getByLabelText('Clear items'))
+    fireEvent.click(screen.getByText('Clear All'))
     expect(screen.getByText('Clear all items?')).toBeInTheDocument()
   })
 
   it('calls onClearAll after confirmation', () => {
     const onClearAll = vi.fn()
     render(<Header onSettingsClick={vi.fn()} onClearAll={onClearAll} />)
-    fireEvent.click(screen.getByLabelText('More options'))
-    fireEvent.click(screen.getByText('Clear all items'))
+    fireEvent.click(screen.getByLabelText('Clear items'))
+    fireEvent.click(screen.getByText('Clear All'))
     fireEvent.click(screen.getByText('Clear All'))
     expect(onClearAll).toHaveBeenCalled()
   })

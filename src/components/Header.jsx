@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
-import { IconMapPin, IconClipboardX } from '@tabler/icons-react'
+import { IconCalendarWeek, IconMapPin, IconClipboardX } from '@tabler/icons-react'
+import ConfirmSheet from './ConfirmSheet'
 
-export default function Header({ onSettingsClick, onClearAll, onClearChecked }) {
+export default function Header({ onSettingsClick, onMealPlanClick, onClearAll, onClearChecked }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [confirm, setConfirm] = useState(null) // 'all' | 'checked' | null
   const menuRef = useRef(null)
@@ -50,6 +51,13 @@ export default function Header({ onSettingsClick, onClearAll, onClearChecked }) 
         </h1>
         <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
           <button
+            aria-label="Meal plan"
+            onClick={onMealPlanClick}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', display: 'flex', alignItems: 'center', color: 'var(--grey-icon)' }}
+          >
+            <IconCalendarWeek size={22} stroke={1.5} />
+          </button>
+          <button
             aria-label="Settings"
             onClick={onSettingsClick}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', display: 'flex', alignItems: 'center', color: 'var(--grey-icon)' }}
@@ -91,57 +99,12 @@ export default function Header({ onSettingsClick, onClearAll, onClearChecked }) 
       </header>
 
       {confirm && (
-        <div
-          onClick={() => setConfirm(null)}
-          style={{
-            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.35)',
-            display: 'flex', zIndex: 500,
-            alignItems: window.innerWidth >= 480 ? 'center' : 'flex-end',
-            justifyContent: 'center',
-          }}
-        >
-          <div
-            onClick={e => e.stopPropagation()}
-            style={{
-              background: 'var(--white)',
-              padding: '24px 16px 32px',
-              ...(window.innerWidth < 480
-                ? { width: '100%', borderRadius: '20px 20px 0 0' }
-                : { width: '360px', borderRadius: '16px', padding: '32px 28px' }
-              ),
-            }}
-          >
-            <h2 style={{ fontSize: '18px', fontWeight: 700, fontFamily: 'var(--font-head)', marginBottom: '6px' }}>
-              {confirm === 'all' ? 'Clear all items?' : 'Clear checked items?'}
-            </h2>
-            <p style={{ color: 'var(--grey-text)', marginBottom: '24px', fontSize: '15px' }}>
-              This cannot be undone.
-            </p>
-            <button
-              onClick={handleConfirm}
-              style={{
-                display: 'block', width: '100%', padding: '16px',
-                background: 'var(--black)', color: 'var(--white)',
-                border: 'none', borderRadius: '10px', fontSize: '16px',
-                fontWeight: 600, cursor: 'pointer', marginBottom: '10px',
-                fontFamily: 'var(--font-body)',
-              }}
-            >
-              {confirm === 'all' ? 'Clear All' : 'Clear Checked'}
-            </button>
-            <button
-              onClick={() => setConfirm(null)}
-              style={{
-                display: 'block', width: '100%', padding: '16px',
-                background: 'none', color: 'var(--black)',
-                border: '1px solid var(--grey-mid)', borderRadius: '10px',
-                fontSize: '16px', cursor: 'pointer', fontFamily: 'var(--font-body)',
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
+        <ConfirmSheet
+          title={confirm === 'all' ? 'Clear all items?' : 'Clear checked items?'}
+          confirmLabel={confirm === 'all' ? 'Clear All' : 'Clear Checked'}
+          onConfirm={handleConfirm}
+          onCancel={() => setConfirm(null)}
+        />
       )}
     </>
   )
