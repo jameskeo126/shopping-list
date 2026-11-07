@@ -3,6 +3,20 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import AddItemInput from './AddItemInput'
 
+describe('AddItemInput checkbox', () => {
+  it('shows the visual checkbox by default', async () => {
+    const { container } = render(<AddItemInput onAdd={vi.fn()} suggestions={[]} />)
+    await userEvent.click(screen.getByRole('button', { name: /add item/i }))
+    expect(container.querySelector('[aria-hidden="true"]')).toBeInTheDocument()
+  })
+
+  it('hides the visual checkbox when showCheckbox is false', async () => {
+    const { container } = render(<AddItemInput showCheckbox={false} onAdd={vi.fn()} suggestions={[]} />)
+    await userEvent.click(screen.getByRole('button', { name: /add item/i }))
+    expect(container.querySelector('[aria-hidden="true"]')).not.toBeInTheDocument()
+  })
+})
+
 describe('AddItemInput', () => {
   it('shows + Add item button initially', () => {
     render(<AddItemInput onAdd={vi.fn()} suggestions={[]} />)

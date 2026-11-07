@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { IconX, IconCheck } from '@tabler/icons-react'
 
-export default function ItemRow({ item, onToggle, onEdit, onDelete }) {
+export default function ItemRow({ item, onToggle, onEdit, onDelete, showCheckbox = true, trailing }) {
   const [editing, setEditing] = useState(false)
   const [editValue, setEditValue] = useState(item.name)
   const inputRef = useRef(null)
@@ -16,7 +16,7 @@ export default function ItemRow({ item, onToggle, onEdit, onDelete }) {
   }, [editing])
 
   function handleRowClick(e) {
-    if (e.target.closest('[role="checkbox"]') || e.target.closest('[aria-label="Delete item"]')) return
+    if (e.target.closest('[role="checkbox"]') || e.target.closest('[aria-label="Delete item"]') || e.target.closest('[data-no-edit]')) return
     if (!editing) {
       setEditValue(item.name)
       setEditing(true)
@@ -50,25 +50,27 @@ export default function ItemRow({ item, onToggle, onEdit, onDelete }) {
         userSelect: 'none',
       }}
     >
-      <div
-        role="checkbox"
-        aria-checked={item.checked}
-        onClick={() => onToggle(item.id, item.checked)}
-        style={{
-          width: '21px',
-          height: '21px',
-          borderRadius: '5px',
-          border: item.checked ? 'none' : '1.5px solid var(--grey-mid)',
-          background: item.checked ? 'var(--black)' : 'transparent',
-          flexShrink: 0,
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        {item.checked && <IconCheck size={13} stroke={2.5} color="white" />}
-      </div>
+      {showCheckbox && (
+        <div
+          role="checkbox"
+          aria-checked={item.checked}
+          onClick={() => onToggle(item.id, item.checked)}
+          style={{
+            width: '21px',
+            height: '21px',
+            borderRadius: '5px',
+            border: item.checked ? 'none' : '1.5px solid var(--grey-mid)',
+            background: item.checked ? 'var(--black)' : 'transparent',
+            flexShrink: 0,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {item.checked && <IconCheck size={13} stroke={2.5} color="white" />}
+        </div>
+      )}
 
       {editing ? (
         <input
@@ -99,6 +101,8 @@ export default function ItemRow({ item, onToggle, onEdit, onDelete }) {
           {item.name}
         </span>
       )}
+
+      {!editing && trailing}
 
       {editing && (
         <button

@@ -5,6 +5,31 @@ import ItemRow from './ItemRow'
 const item        = { id: 'i1', name: 'Milk', sectionId: 'dairy-cheese', checked: false }
 const checkedItem = { ...item, checked: true }
 
+describe('ItemRow without a checkbox', () => {
+  it('renders no checkbox and still opens edit mode with the delete button', () => {
+    render(<ItemRow item={item} showCheckbox={false} onDelete={vi.fn()} />)
+    expect(screen.queryByRole('checkbox')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByText('Milk'))
+    expect(screen.getByLabelText('Delete item')).toBeInTheDocument()
+  })
+})
+
+describe('ItemRow trailing content', () => {
+  const trailing = <button data-no-edit="">Grip</button>
+
+  it('renders trailing content and tapping it does not open edit mode', () => {
+    render(<ItemRow item={item} showCheckbox={false} trailing={trailing} onDelete={vi.fn()} />)
+    fireEvent.click(screen.getByText('Grip'))
+    expect(screen.queryByLabelText('Delete item')).not.toBeInTheDocument()
+  })
+
+  it('hides trailing content while editing', () => {
+    render(<ItemRow item={item} showCheckbox={false} trailing={trailing} onDelete={vi.fn()} />)
+    fireEvent.click(screen.getByText('Milk'))
+    expect(screen.queryByText('Grip')).not.toBeInTheDocument()
+  })
+})
+
 describe('ItemRow', () => {
   it('renders item name', () => {
     render(<ItemRow item={item} onToggle={vi.fn()} onDelete={vi.fn()} />)

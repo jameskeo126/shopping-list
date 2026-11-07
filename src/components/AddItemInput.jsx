@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { IconPlus } from '@tabler/icons-react'
 
-export default function AddItemInput({ onAdd, suggestions }) {
+export default function AddItemInput({ onAdd, suggestions, showCheckbox = true }) {
   const [active, setActive] = useState(false)
   const [value, setValue] = useState('')
   const inputRef = useRef(null)
@@ -83,17 +83,19 @@ export default function AddItemInput({ onAdd, suggestions }) {
         borderBottom: '1px solid var(--grey-light)',
       }}>
         {/* Visual-only checkbox — not interactive, no aria role */}
-        <div
-          aria-hidden="true"
-          style={{
-            width: '21px',
-            height: '21px',
-            borderRadius: '5px',
-            border: '1.5px solid var(--grey-mid)',
-            background: 'transparent',
-            flexShrink: 0,
-          }}
-        />
+        {showCheckbox && (
+          <div
+            aria-hidden="true"
+            style={{
+              width: '21px',
+              height: '21px',
+              borderRadius: '5px',
+              border: '1.5px solid var(--grey-mid)',
+              background: 'transparent',
+              flexShrink: 0,
+            }}
+          />
+        )}
         <input
           ref={inputRef}
           value={value}
